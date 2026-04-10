@@ -2,571 +2,1058 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>YTCH S2 Feedback — Insert Plan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YTCH — План вставок и призывов v2</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shared.css">
 <style>
-:root {
-  --fund: #FF6B6B;
-  --expert: #FFD93D;
-  --fund-bg: rgba(255,107,107,.08);
-  --expert-bg: rgba(255,217,61,.06);
-}
-.wrap{padding:48px 40px;max-width:1060px;margin:0 auto}
-h1{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;color:var(--lime);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
-.sub{font-size:15px;color:var(--muted);font-weight:300;margin-bottom:36px}
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e0e0e6;
+    --muted: #8b8fa3;
+    --accent: #6c8cff;
+    --cta: #ff6b6b;
+    --expert: #ffd93d;
+    --cta-bg: #2a1e1e;
+    --expert-bg: #2a2718;
+    --timeline: #3a3d4a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+  .subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem; }
 
-/* Legend */
-.legend{display:flex;gap:20px;margin-bottom:32px;flex-wrap:wrap}
-.legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
-.legend-dot{width:12px;height:12px;border-radius:3px}
-.legend-dot.original{background:var(--blue)}
-.legend-dot.expert{background:var(--expert)}
-.legend-dot.cta{background:var(--fund)}
+  .legend {
+    display: flex; gap: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem;
+  }
+  .legend-dot {
+    width: 12px; height: 12px; border-radius: 3px;
+  }
+  .legend-dot.expert { background: var(--expert); }
+  .legend-dot.cta { background: var(--cta); }
+  .legend-dot.original { background: var(--accent); }
 
-/* Feedback card */
-.feedback{background:var(--expert-bg);border:1px solid rgba(255,217,61,.2);border-radius:14px;padding:24px 28px;margin-bottom:32px}
-.feedback h2{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;color:var(--expert);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
-.feedback p{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:8px}
-.feedback .quote{font-style:italic;color:var(--muted);border-left:3px solid var(--expert);padding-left:16px;margin:12px 0;font-size:13px;line-height:1.7}
+  .feedback-card {
+    background: var(--expert-bg);
+    border: 1px solid #4a3d18;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .feedback-card h2 {
+    color: var(--expert);
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  .feedback-card p { font-size: 0.9rem; color: var(--text); margin-bottom: 0.5rem; }
+  .feedback-card .quote {
+    font-style: italic;
+    color: var(--muted);
+    border-left: 3px solid var(--expert);
+    padding-left: 1rem;
+    margin: 0.8rem 0;
+  }
 
-/* Video section */
-.vid{background:var(--panel);border:1px solid var(--border);border-radius:14px;margin-bottom:28px;overflow:hidden}
-.vid-head{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
-.vid-head h2{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:900;color:var(--white);letter-spacing:1px}
-.vid-meta{font-size:12px;color:var(--muted);font-weight:300}
-.vid-body{padding:24px}
+  .video-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .video-header {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .video-header h2 { font-size: 1.2rem; margin-bottom: 0.3rem; }
+  .video-meta { color: var(--muted); font-size: 0.85rem; }
+  .video-body { padding: 1.5rem; }
 
-/* Timeline */
-.tl{position:relative;padding-left:84px}
-.tl::before{content:'';position:absolute;left:38px;top:0;bottom:0;width:2px;background:rgba(123,164,212,.12)}
-.tl-item{position:relative;margin-bottom:10px;padding:10px 16px;border-radius:8px;border:1px solid var(--border);background:var(--panel)}
-.tl-item.expert{background:var(--expert-bg);border-color:rgba(255,217,61,.25);border-left:3px solid var(--expert)}
-.tl-item.cta{background:var(--fund-bg);border-color:rgba(255,107,107,.25);border-left:3px solid var(--fund)}
-.tl-tc{position:absolute;left:-78px;top:12px;font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
-.tl-dot{position:absolute;left:-52px;top:14px;width:10px;height:10px;border-radius:50%;background:rgba(123,164,212,.2)}
-.tl-item.expert .tl-dot{background:var(--expert)}
-.tl-item.cta .tl-dot{background:var(--fund)}
+  .timeline {
+    position: relative;
+    padding-left: 80px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 35px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--timeline);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 1rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .timeline-item.original {
+    background: var(--card);
+    border-color: var(--border);
+  }
+  .timeline-item.expert-insert {
+    background: var(--expert-bg);
+    border-color: #4a3d18;
+    border-left: 3px solid var(--expert);
+  }
+  .timeline-item.cta-insert {
+    background: var(--cta-bg);
+    border-color: #4a2020;
+    border-left: 3px solid var(--cta);
+  }
+  .timeline-tc {
+    position: absolute;
+    left: -75px;
+    top: 0.85rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .timeline-dot {
+    position: absolute;
+    left: -50px;
+    top: 1rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--timeline);
+  }
+  .timeline-item.expert-insert .timeline-dot { background: var(--expert); }
+  .timeline-item.cta-insert .timeline-dot { background: var(--cta); }
 
-.badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 8px;border-radius:4px;margin-bottom:6px}
-.badge.expert{background:var(--expert);color:#1a1500}
-.badge.cta{background:var(--fund);color:#1a0500}
+  .insert-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 0.4rem;
+  }
+  .insert-badge.expert { background: var(--expert); color: #1a1500; }
+  .insert-badge.cta { background: var(--cta); color: #1a0500; }
 
-.ins-title{font-weight:700;font-size:14px;color:var(--white);margin-bottom:6px}
-.script{background:rgba(0,0,0,.2);padding:10px 14px;border-radius:8px;margin-top:6px;font-style:italic;font-size:13px;color:rgba(255,255,255,.8);line-height:1.6}
-.ins-why{font-size:12px;color:var(--muted);margin-top:6px}
+  .insert-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.4rem; }
+  .insert-text { font-size: 0.88rem; color: var(--text); }
+  .insert-text .script {
+    background: rgba(255,255,255,0.05);
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .insert-reason { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; }
 
-.seg{font-size:13px;color:var(--muted);line-height:1.6}
-.seg strong{color:var(--white);font-weight:600}
-.seg .q{color:rgba(255,255,255,.7);font-style:italic;display:block;margin-top:3px}
+  .segment-text { font-size: 0.85rem; color: var(--muted); }
+  .segment-text strong { color: var(--text); font-weight: 500; }
+  .segment-text .quote-line {
+    color: var(--text);
+    opacity: 0.7;
+    font-style: italic;
+    display: block;
+    margin-top: 0.2rem;
+  }
 
-.half{text-align:center;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:2px;padding:4px 0;border-top:1px dashed rgba(123,164,212,.15);border-bottom:1px dashed rgba(123,164,212,.15);margin:6px 0}
+  .half-marker {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0;
+    border-top: 1px dashed var(--timeline);
+    border-bottom: 1px dashed var(--timeline);
+    margin: 0.5rem 0;
+  }
 
-/* Summary table */
-.stbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
-.stbl th{text-align:left;padding:8px;border-bottom:2px solid var(--border);color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
-.stbl td{padding:8px;border-bottom:1px solid var(--border);vertical-align:top}
-.stbl tr.sep td{border-top:2px solid var(--border)}
-.note{color:var(--muted);font-size:13px;margin-top:16px;line-height:1.6}
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.88rem;
+  }
+  .summary-table th {
+    text-align: left;
+    padding: 0.6rem;
+    border-bottom: 2px solid var(--border);
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .summary-table td {
+    padding: 0.6rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  /* Header */
+  .hdr {
+    position: sticky; top: 0; z-index: 100;
+    background: #1a1d27;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px; font-weight: 900;
+    color: var(--cta); letter-spacing: 2px;
+  }
+  .hdr-title {
+    font-size: 16px; font-weight: 300; color: var(--muted);
+    margin-left: 20px; padding-left: 20px;
+    border-left: 1px solid var(--border);
+  }
+  .hdr-right {
+    font-size: 12px; color: var(--text); font-weight: 300; text-align: right;
+  }
+  .hdr-right a { color: var(--text); font-weight: 700; text-decoration: none; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 28px 40px;
+    border-top: 1px solid var(--border);
+    margin-top: 3rem;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .footer a { color: var(--accent); text-decoration: none; }
+  .footer a:hover { opacity: .8; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="hdr">
   <div class="logo">YTCH</div>
-  <div class="hdr-title">S2 Feedback &mdash; Insert Plan</div>
+  <div class="hdr-title">S2 Feedback &mdash; План вставок</div>
   <div class="hdr-right">
     v2 &middot; <span id="hdr-date"></span> Dubai (GMT+4)<br>
     powered by <a href="https://rya.ae/">RYA.AE</a>
   </div>
 </div>
 
-<div class="wrap">
-
-<h1>Plan vstavok i prizyvov</h1>
-<p class="sub">burodd.ru &middot; Feedback Anny &middot; 4 video</p>
+<h1>YTCH — План вставок и призывов к сбору</h1>
+<p class="subtitle">Канал burodd.ru | Фидбек Анны | v2 — 10 апреля 2026</p>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot original"></div> Ishodnoe video</div>
-  <div class="legend-item"><div class="legend-dot expert"></div> Ekspertnaya vstavka (Anna)</div>
-  <div class="legend-item"><div class="legend-dot cta"></div> Prizyv / sbor na professii</div>
+  <div class="legend-item"><div class="legend-dot original"></div> Исходное видео</div>
+  <div class="legend-item"><div class="legend-dot expert"></div> Экспертная вставка (Анна)</div>
+  <div class="legend-item"><div class="legend-dot cta"></div> Призыв / сбор на профессии</div>
 </div>
 
 <!-- ===== FEEDBACK ===== -->
-<div class="feedback">
-  <h2>Feedback Anny</h2>
-  <p><strong>Glavnaya problema:</strong> Vse 4 video sozdayut vpechatlenie, chto v detskih domah vsyo horosho. No Bogoyavlenskij — eto 1% uchrezhdenij. Fond za vse gody vstretil lish' 2 takih doma (Bogoyavlenie i Chencovskij pod Kostromoj).</p>
-  <div class="quote">"My za vse gody raboty fonda vstretili lish' 2 takih detskih doma. V bol'shinstve — profneprigodnye pedagogi, dedovschina, pobegi. A video transliruet, chto detskij dom — eto ne strashno."</div>
-  <p><strong>Reshenie:</strong> V kazhdoe video — ekspertnaya vstavka ot Anny + prizyv k sboru na professii. Vstavki razneseny, ne stoyat ryadom.</p>
+<div class="feedback-card">
+  <h2>Фидбек Анны — глава фонда, приёмная мама</h2>
+  <p><strong>Главная проблема:</strong> Все 4 видео создают впечатление, что в детских домах всё хорошо. Но Богоявленский — это 1% учреждений. Фонд за все годы встретил лишь 2 таких дома (Богоявление и Ченцовский под Костромой).</p>
+  <div class="quote">"Мы за все годы работы фонда встретили лишь 2 таких детских дома. В большинстве — профнепригодные педагоги, дедовщина, побеги. А видео транслирует, что детский дом — это не страшно."</div>
+  <p><strong>Решение:</strong> В каждое видео — экспертная вставка от Анны + призыв к сбору на профессии для ребят. Вставки разнесены, не стоят рядом.</p>
 </div>
 
 
 <!-- ================================================================== -->
 <!--                          YTCH02 VLAD                               -->
 <!-- ================================================================== -->
-<div class="vid">
-  <div class="vid-head">
-    <h2>YTCH02 &mdash; Vlad</h2>
-    <span class="vid-meta">34:13 &middot; 18 let, yurfak KFU &middot; 2 spikera &middot; confidence 0.88</span>
+<div class="video-section">
+  <div class="video-header">
+    <h2>YTCH02 — Влад</h2>
+    <div class="video-meta">34:13 | 18 лет, 1 курс юрфака КФУ, выпускник Богоявленского ДД | 2 спикера | confidence 0.88</div>
   </div>
-  <div class="vid-body"><div class="tl">
+  <div class="video-body">
+    <div class="timeline">
 
-    <div class="tl-item"><span class="tl-tc">00:00</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Huk:</strong><span class="q">"Mama govorila, chto tam voobshche ne kormyat, ne dayut odezhdu, v oborvannyh veschah hodyat. Ya ne vyderzhal, vyzval policejskih..."</span></div>
+      <div class="timeline-item original">
+        <span class="timeline-tc">00:00</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Хук:</strong>
+          <span class="quote-line">"Мама говорила, что там вообще не кормят, не дают одежду, в оборванных вещах ходят. Я не выдержал, вызвал полицейских..."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">00:25</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Представление:</strong>
+          <span class="quote-line">"Меня зовут Владислав, мне 18 лет. Обучаюсь в Казанском федеральном университете на первом курсе юридического факультета. Выпускник Богоявленского детского дома."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">00:46</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Семья:</strong> Мать пила, часто не было дома. Всё время у бабушки. Мать скандалила — Влад вызвал полицию.
+          <span class="quote-line">"Она давала обещания, что не будет пить. И нарушала их."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">01:28</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Реабцентр — 1-й раз:</strong> Психологи, мать и бабушка навещали, приносили одежду. Через несколько месяцев вернули матери.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">03:25</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Обратно к матери:</strong> Снова пила. Влад жил у бабушки, прогуливал школу.
+          <span class="quote-line">"Бабушка работала сиделкой. Я был в своём самостоятельном распоряжении. В основном играл в компьютер."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">04:28</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Реабцентр — 2-й, 3-й раз:</strong> Тот же цикл. Бабушка вызывала полицию. Мать забирала обратно.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">04:44</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Потери:</strong> Сначала умерла прабабушка, через месяц — бабушка.
+          <span class="quote-line">"Я думал, что всё нормально будет. Буду с ней жить, вырасту, буду работать. Поэтому обидно."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item expert-insert">
+        <span class="timeline-tc">~05:20</span>
+        <div class="timeline-dot"></div>
+        <span class="insert-badge expert">Эксперт — Анна</span>
+        <div class="insert-title">"Почему систему не починили раньше"</div>
+        <div class="insert-text">
+          <div class="script">Анна: "Влада три раза забирали и три раза возвращали матери. Это типичная ситуация — система настроена на возврат ребёнка в семью, даже когда семья не готова. Если бы с его мамой начали работать профессионально с первого раза — психологи, реабилитация от зависимости — возможно, его детство сложилось бы иначе. Но таких программ в России почти нет."</div>
+        </div>
+        <div class="insert-reason">Почему здесь: после эмоционального блока про потери — зритель готов к контексту. 15% видео.</div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">05:39</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Попал в Богоявленский ДД:</strong> МВД, директор забрал. Книги, акция "Подари книгу".
+          <span class="quote-line">"Нам привезли очень много книг. От фантастики до Гарри Поттера."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">07:51</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Жизнь в ДД:</strong> Учился, ходил в школу, нашёл друзей, много читал. К 9-му классу наверстал упущенное.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">09:00</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Отказался от опеки:</strong>
+          <span class="quote-line">"Я понимал, что не хочу, чтобы меня брали под опеку. В детском доме больше плюсов. Адаптируешься, живёшь по графику, успеваешь учиться."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">10:14</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Смерть матери:</strong> Цирроз на фоне алкоголизма. 9-й класс, на носу ОГЭ.
+          <span class="quote-line">"Я ей писал, она мне отвечала. Лекарства не принимала. Я, конечно же, заплакал."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">12:05</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Осмысление:</strong>
+          <span class="quote-line">"Никого винить. Она сама выбрала такую жизнь. Работать люди перестают. Начинаются беды."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">13:53</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Приёмная семья:</strong> Подруга бабушки предложила опеку. У неё уже 3 опекаемых ребёнка. Влад согласился попробовать.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">15:21</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Конфликты в семье:</strong> Религия (пост, мясо), гиперопека, забирали телефон после 9. Договор обязанностей.
+          <span class="quote-line">"Муж опекунши кушал перед телевизором. Я воспринял это как нарушение и перестал соблюдать договор."</span>
+        </div>
+      </div>
+
+      <div class="half-marker">--- СЕРЕДИНА ВИДЕО (17:06) ---</div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">18:42</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Перевод в Богоявленский:</strong> Друг Артём уже был там, присылал фото кружков. Спонсоры помогли обустроить.
+          <span class="quote-line">"Очень простой детский дом. Бюджет не позволял. А тут спонсоры закупили и помогли всё обустроить."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item cta-insert">
+        <span class="timeline-tc">~19:25</span>
+        <div class="timeline-dot"></div>
+        <span class="insert-badge cta">Сбор</span>
+        <div class="insert-title">"Оплатите подготовительный курс для выпускника"</div>
+        <div class="insert-text">
+          <div class="script">Титр + голос Анны: "Влад готовился к ЕГЭ по слитым курсам из телеграма — других не было. Не у каждого выпускника есть такая настойчивость. Фонд «Бюро Добрых Дел» оплачивает подготовительные курсы и репетиторов. Один курс подготовки к ЕГЭ — от 15 000 рублей. Помогите следующему выпускнику поступить в университет. burodd.ru"</div>
+        </div>
+        <div class="insert-reason">Почему здесь: Влад только что рассказал, что спонсоры помогли ДД — естественный переход к "помогите и вы". 57% видео — далеко от экспертной вставки (05:20).</div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">20:14</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Подготовка к ЕГЭ:</strong> Слитые курсы из телеграма, бесплатно. Писал человеку — скидывали программу.
+          <span class="quote-line">"Мне хотелось очень сдать ЕГЭ. Поступить в хороший вуз."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">21:20</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Выбор вуза:</strong> Хотел в Следственный комитет — не прошёл по физкультуре. Выбрал юрфак КФУ.
+          <span class="quote-line">"Если ты смог сдать первую сессию — ты уже круче Ленина."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">24:53</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Жизнь в Казани:</strong> Общежитие, 4 человека. Сам готовит, покупает. Бюджет: ~20 000 руб/мес. Стипендия 15к, от ДД 11к, от вуза 50к на старте.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">29:33</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Связь с ДД:</strong> Летом стажировка в Следственном комитете. Может вернуться в ДД если тяжело.
+          <span class="quote-line">"Тут меня могут покормить, выдать вещи. Я не чураюсь от любого труда."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">31:53</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Планы:</strong> Бакалавриат → магистратура, армия, немецкий язык, Германия. Семья — потом.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">33:23</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Совет выпускникам:</strong>
+          <span class="quote-line">"Найти себя в обучении или труде. Развиться до такой степени, чтобы ни от кого не зависеть."</span>
+        </div>
+      </div>
+
     </div>
-
-    <div class="tl-item"><span class="tl-tc">00:25</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Predstavlenie:</strong><span class="q">"Menya zovut Vladislav, mne 18 let. Obuchayus' v Kazanskom federal'nom universitete na pervom kurse yuridicheskogo fakul'teta. Vypusknik Bogoyavlenskogo detskogo doma."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">00:46</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Sem'ya:</strong> Mat' pila, chasto ne bylo doma. Vsyo vremya u babushki. Mat' skandalila — Vlad vyzval policiyu.<span class="q">"Ona davala obeschaniya, chto ne budet pit'. I narushala ih."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">01:28</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Reabcentr — 1-j raz:</strong> Psihologi, mat' i babushka naveschali, prinosili odezhdu. Cherez neskol'ko mesyacev vernuli materi.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">03:25</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Obratno k materi:</strong> Snova pila. Vlad zhil u babushki, proguival shkolu.<span class="q">"Babushka rabotala sidelkoj. Ya byl v svoyom samostoyatel'nom rasporyazhenii. V osnovnom igral v komp'yuter."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">04:28</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Reabcentr — 2-j, 3-j raz:</strong> Tot zhe cikl. Babushka vyzyvala policiyu. Mat' zabirala obratno.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">04:44</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Poteri:</strong> Snachala umerla prababushka, cherez mesyac — babushka.<span class="q">"Ya dumal, chto vsyo normal'no budet. Budu s nej zhit', vyrastu, budu rabotat'. Poetomu obidno."</span></div>
-    </div>
-
-    <div class="tl-item expert"><span class="tl-tc">~05:20</span><div class="tl-dot"></div>
-      <span class="badge expert">EKSPERT — ANNA</span>
-      <div class="ins-title">"Pochemu sistemu ne pochinili ran'she"</div>
-      <div class="script">Anna: "Vlada tri raza zabirali i tri raza vozvraschali materi. Eto tipichnaya situaciya — sistema nastroena na vozvrat rebyonka v sem'yu, dazhe kogda sem'ya ne gotova. Esli by s ego mamoj nachali rabotat' professional'no s pervogo raza — psihologi, reabilitaciya ot zavisimosti — vozmozhno, ego detstvo slozhilos' by inache. No takih programm v Rossii pochti net."</div>
-      <div class="ins-why">Pochemu zdes': posle emocional'nogo bloka pro poteri — zritel' gotov k kontekstu. 15% video.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">05:39</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Popal v Bogoyavlenskij DD:</strong> MVD, direktor zabral. Knigi, akciya "Podari knigu".<span class="q">"Nam privezli ochen' mnogo knig. Ot fantastiki do Garri Pottera."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">07:51</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Zhizn' v DD:</strong> Uchilsya, hodil v shkolu, nashyol druzej, mnogo chital. K 9-mu klassu naverstal upuschennoe.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">09:00</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Otkazalsya ot opeki:</strong><span class="q">"Ya ponimal, chto ne hochu, chtoby menya brali pod opeku. V detskom dome bol'she plyusov. Adaptiruesh'sya, zhivyosh' po grafiku, uspevaesh' uchit'sya."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">10:14</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Smert' materi:</strong> Cirroz na fone alkogolizma. 9-j klass, na nosu OGE.<span class="q">"Ya ej pisal, ona mne otvechala. Lekarstva ne prinimala. Ya, konechno zhe, zaplakal."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">13:53</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Priyomnaya sem'ya:</strong> Podruga babushki predlozhila opeku. U neyo uzhe 3 opekayemyh rebyonka. Vlad soglasilsya poprobovat'.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">15:21</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Konflikty v sem'e:</strong> Religiya (post, myaso), giperopeka, zabirali telefon posle 9. Dogovor obyazannostej.<span class="q">"Muzh opekunshi kushal pered televizorom. Ya vosprinyal eto kak narushenie i perestal soblyudat' dogovor."</span></div>
-    </div>
-
-    <div class="half">--- SEREDINA VIDEO (17:06) ---</div>
-
-    <div class="tl-item"><span class="tl-tc">18:42</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Perevod v Bogoyavlenskij:</strong> Drug Artyom uzhe byl tam, prisylal foto kruzhkov. Sponsory pomogli obustroit'.<span class="q">"Ochen' prostoj detskij dom. Byudzhet ne pozvolyal. A tut sponsory zakupili i pomogli vsyo obustroit'."</span></div>
-    </div>
-
-    <div class="tl-item cta"><span class="tl-tc">~19:25</span><div class="tl-dot"></div>
-      <span class="badge cta">SBOR</span>
-      <div class="ins-title">"Oplatite podgotovitel'nyj kurs dlya vypusknika"</div>
-      <div class="script">Titr + golos Anny: "Vlad gotovylsya k EGE po slitym kursam iz telegrama — drugih ne bylo. Ne u kazhdogo vypusknika est' takaya nastojchivost'. Fond 'Byuro Dobryh Del' oplachivaet podgotovitel'nye kursy i repetitorov. Odin kurs podgotovki k EGE — ot 15 000 rublej. Pomogite sleduyuschemu vypuskniku postupit' v universitet. burodd.ru"</div>
-      <div class="ins-why">Pochemu zdes': Vlad rasskazal, chto sponsory pomogli DD — estestvennyj perehod. 57% video — daleko ot ekspertnoj vstavki (05:20).</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">20:14</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Podgotovka k EGE:</strong> Slitye kursy iz telegrama, besplatno.<span class="q">"Mne hotelos' ochen' sdat' EGE. Postupit' v horoshij vuz."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">21:20</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Vybor vuza:</strong> Hotel v Sledstvennyj komitet — ne proshyol po fizkul'ture. Vybral yurfak KFU.<span class="q">"Esli ty smog sdat' pervuyu sessiyu — ty uzhe kruche Lenina."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">24:53</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Zhizn' v Kazani:</strong> Obschezhitie, 4 cheloveka. Sam gotovit, pokupaet. Byudzhet: ~20 000 rub/mes. Stipendiya 15k, ot DD 11k, ot vuza 50k na starte.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">29:33</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Svyaz' s DD:</strong> Letom stazhirovka. Mozhet vernut'sya v DD esli tyazhelo.<span class="q">"Tut menya mogut pokormit', vydat' veschi. Ya ne churayus' ot lyubogo truda."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">31:53</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Plany:</strong> Bakalavriat, magistratura, armiya, nemeckij yazyk, Germaniya. Sem'ya — potom.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">33:23</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Sovet vypusknikam:</strong><span class="q">"Najti sebya v obuchenii ili trude. Razvit'sya do takoj stepeni, chtoby ni ot kogo ne zaviset'."</span></div>
-    </div>
-
-  </div></div>
+  </div>
 </div>
 
 
 <!-- ================================================================== -->
 <!--                       YTCH03 DANIIL                                -->
 <!-- ================================================================== -->
-<div class="vid">
-  <div class="vid-head">
-    <h2>YTCH03 &mdash; Daniil</h2>
-    <span class="vid-meta">19:16 &middot; 23 goda, smetchik-stroitel' &middot; 2 spikera &middot; confidence 0.88</span>
+<div class="video-section">
+  <div class="video-header">
+    <h2>YTCH03 — Даниил</h2>
+    <div class="video-meta">19:16 | 23 года, сметчик-строитель, выпускник Богоявленского ДД | 2 спикера | confidence 0.88</div>
   </div>
-  <div class="vid-body"><div class="tl">
+  <div class="video-body">
+    <div class="timeline">
 
-    <div class="tl-item"><span class="tl-tc">00:00</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Huk:</strong><span class="q">"Pugali, znaete, kogda ya eshchyo doma zhil s babushkoj. Materi chasto ne bylo doma. Tipa — priedut, zaberut v detskij dom, tam b'yut, ne poesh' normal'no."</span></div>
+      <div class="timeline-item original">
+        <span class="timeline-tc">00:00</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Хук:</strong>
+          <span class="quote-line">"Пугали, знаете, когда я ещё дома жил с бабушкой. Матери часто не было дома. Типа — приедут, заберут в детский дом, там бьют, не поешь нормально."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">00:34</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text">
+          <span class="quote-line">"Когда я приехал сюда — я верил, что меня заберёт мама. Я долго верил."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">00:43</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Представление:</strong>
+          <span class="quote-line">"Привет, меня зовут Даниил, мне 23 года. Выпускник Богоявленского детского дома. Работаю сметчиком."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">01:23</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Семья:</strong> Родители пили. Во 2-м классе забрали в приют с сестрой.
+          <span class="quote-line">"Помимо меня с сестрой была, у неё ещё были свои дети."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">01:45</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Жизнь в ДД:</strong> Деревня, бытовая жизнь, учёба, помощь по хозяйству. Адаптация.
+        </div>
+      </div>
+
+      <div class="timeline-item expert-insert">
+        <span class="timeline-tc">~03:50</span>
+        <div class="timeline-dot"></div>
+        <span class="insert-badge expert">Эксперт — Анна</span>
+        <div class="insert-title">"Алкоголизм родителей — причина №1"</div>
+        <div class="insert-text">
+          <div class="script">Анна: "Алкоголизм родителей — это причина номер один, по которой дети попадают в детские дома. Не бедность, не болезнь — именно алкоголь. И самое тяжёлое — дети до последнего верят, что мама заберёт. Даниил говорит: «Я долго верил.» Это ожидание может длиться годами. Именно поэтому так важна работа с семьёй на ранней стадии — пока ещё есть шанс."</div>
+        </div>
+        <div class="insert-reason">Почему здесь: после блока про семью и перед адаптацией в ДД. 20% видео.</div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">03:53</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Спорт:</strong> Приехали старшие парни, позвали в футбол. Нашёл себя.
+          <span class="quote-line">"Привет, а как зовут? Играешь в футбол? Сказал — да. На самом деле я вообще не умел."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">04:26</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>9 лет в ДД:</strong> Был потерявшийся мальчишка. Кроме спорта не видел перспектив. В школе не горел.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">07:29</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Семья — не по крови:</strong>
+          <span class="quote-line">"Люди, которые нам никем не приходятся, в жизни играют намного большую роль и больше готовы помочь."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">07:58</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Мать:</strong> Пыталась общаться. "Мы говорили — не надо, хватит, что-то изменится." Не изменилось.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">09:01</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Разрыв:</strong> Полгода общался худо-бедно. Потом — точка.
+          <span class="quote-line">"Вообще перестал с родственниками общаться. С сестрой, с матерью, с тётей."</span>
+        </div>
+      </div>
+
+      <div class="half-marker">--- СЕРЕДИНА ВИДЕО (9:38) ---</div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">10:13</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Воспитатели:</strong>
+          <span class="quote-line">"Крутые воспитатели, крутой директор. Диля Александровна и Гуля Александровна — они мне вообще во всём помогли. Прям из этого всего дерьма выбраться."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">11:09</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text">
+          <span class="quote-line">"Поэтому я рад, что попал в детский дом."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">11:19</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Возможности в ДД:</strong> Ковры, вязание, спорт, фиджитал-футбол (PlayStation + паркет).
+          <span class="quote-line">"Можно научиться делать ковры, вязать. Девчонки учатся — и причём не просто, они там какие-то крутые вещи делают."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item cta-insert">
+        <span class="timeline-tc">~12:00</span>
+        <div class="timeline-dot"></div>
+        <span class="insert-badge cta">Сбор</span>
+        <div class="insert-title">"Помогите ребятам из других домов получить такие же возможности"</div>
+        <div class="insert-text">
+          <div class="script">Титр + голос Анны: "То, что вы видите — ковры, спорт, профессии — есть далеко не в каждом детском доме. В большинстве учреждений дети просто ждут 18 лет. Фонд «Бюро Добрых Дел» создаёт программы профессий в других детских домах. Обучение одной профессии — от 15 000 рублей. Каждая оплаченная профессия — это ребёнок, который выйдет во взрослую жизнь подготовленным. burodd.ru"</div>
+        </div>
+        <div class="insert-reason">Почему здесь: после перечисления возможностей Богоявленского — контраст "не везде так". 62% видео — далеко от экспертной вставки (03:50).</div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">13:19</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Самостоятельность:</strong> В ДД всё готово — еда, стирка, уборка. А потом раз — и ты должен сам.
+          <span class="quote-line">"Это проблема. Реально проблема."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">13:48</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Социальные квартиры:</strong> Учился жить один, бюджет, график. Потом — без проблем.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">16:11</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Образование:</strong> Поступил на платное во Владимирский институт. Фонд оплатил первые 2 семестра.
+          <span class="quote-line">"Фонд, по-моему, ещё помогал. Бюро Добрых Дел. Первые два семестра помогали оплачивать."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">17:16</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Работа:</strong> Устроился в магазин электрики, потом сам оплачивал учёбу.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">18:15</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Извинения:</strong>
+          <span class="quote-line">"Если бы общался с тётей — извинился бы. За те слова, за те поступки. Ведь они ничего плохого мне тогда не сказали. Мне много времени понадобилось, чтобы это понять."</span>
+        </div>
+      </div>
+
     </div>
-
-    <div class="tl-item"><span class="tl-tc">00:34</span><div class="tl-dot"></div>
-      <div class="seg"><span class="q">"Kogda ya priehal syuda — ya veril, chto menya zaberyet mama. Ya dolgo veril."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">00:43</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Predstavlenie:</strong><span class="q">"Privet, menya zovut Daniil, mne 23 goda. Vypusknik Bogoyavlenskogo detskogo doma. Rabotayu smetchikom."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">01:23</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Sem'ya:</strong> Roditeli pili. Vo 2-m klasse zabrali v priyut s sestroj.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">01:45</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Zhizn' v DD:</strong> Derevnya, bytovaya zhizn', uchyoba, pomosch' po hozyajstvu. Adaptaciya.</div>
-    </div>
-
-    <div class="tl-item expert"><span class="tl-tc">~03:50</span><div class="tl-dot"></div>
-      <span class="badge expert">EKSPERT — ANNA</span>
-      <div class="ins-title">"Alkogolizm roditelej — prichina №1"</div>
-      <div class="script">Anna: "Alkogolizm roditelej — eto prichina nomer odin, po kotoroj deti popadayut v detskie doma. Ne bednost', ne bolezn' — imenno alkogol'. I samoe tyazhyoloe — deti do poslednego veryat, chto mama zaberyet. Daniil govorit: 'Ya dolgo veril.' Eto ozhidanie mozhet dlit'sya godami. Imenno poetomu tak vazhna rabota s sem'yoj na rannej stadii — poka eshchyo est' shans."</div>
-      <div class="ins-why">Pochemu zdes': posle bloka pro sem'yu i pered adaptaciej v DD. 20% video.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">03:53</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Sport:</strong> Priehali starshie parni, pozvali v futbol. Nashyol sebya.<span class="q">"Privet, a kak zovut? Igraesh' v futbol? Skazal — da. Na samom dele ya voobshche ne umel."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">04:26</span><div class="tl-dot"></div>
-      <div class="seg"><strong>9 let v DD:</strong> Byl poteryavshijsya mal'chishka. Krome sporta ne videl perspektiv. V shkole ne gorel.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">07:29</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Sem'ya — ne po krovi:</strong><span class="q">"Lyudi, kotorye nam nikem ne prihodyatsya, v zhizni igrayut gorazdo bol'shuyu rol' i bol'she gotovy pomoch'."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">07:58</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Mat':</strong> Pytalas' obschhat'sya. "My govorili — ne nado, hvatit, chto-to izmenitsya." Ne izmenilos'.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">09:01</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Razryv:</strong> Polgoda obschalsya hudo-bedno. Potom — tochka.<span class="q">"Voobshche perestal s rodstvennikami obschhat'sya. S sestroj, s mater'yu, s tyotej."</span></div>
-    </div>
-
-    <div class="half">--- SEREDINA VIDEO (9:38) ---</div>
-
-    <div class="tl-item"><span class="tl-tc">10:13</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Vospitateli:</strong><span class="q">"Krutye vospitateli, krutoj direktor. Dilya Aleksandrovna i Gulya Aleksandrovna — oni mne voobshche vo vsyom pomogli. Pryam iz etogo vsego der'ma vybrat'sya."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">11:09</span><div class="tl-dot"></div>
-      <div class="seg"><span class="q">"Poetomu ya rad, chto popal v detskij dom."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">11:19</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Vozmozhnosti v DD:</strong> Kovry, vyazanie, sport, fidzhital-futbol (PlayStation + parket).<span class="q">"Mozhno nauchit'sya delat' kovry, vyazat'. Devchonki uchatsya — i prichyom ne prosto, oni tam kakie-to krutye veschi delayut."</span></div>
-    </div>
-
-    <div class="tl-item cta"><span class="tl-tc">~12:00</span><div class="tl-dot"></div>
-      <span class="badge cta">SBOR</span>
-      <div class="ins-title">"Pomogite rebyatam iz drugih domov poluchit' takie zhe vozmozhnosti"</div>
-      <div class="script">Titr + golos Anny: "To, chto vy vidite — kovry, sport, professii — est' daleko ne v kazhdom detskom dome. V bol'shinstve uchrezhdenij deti prosto zhdut 18 let. Fond 'Byuro Dobryh Del' sozdayot programmy professij v drugih detskih domah. Obuchenie odnoj professii — ot 15 000 rublej. Kazhdaya oplachennaya professiya — eto rebyonok, kotoryj vyjdet vo vzrosluyu zhizn' podgotovlennym. burodd.ru"</div>
-      <div class="ins-why">Pochemu zdes': posle perechisleniya vozmozhnostej Bogoyavlenskogo — kontrast "ne vezde tak". 62% video — daleko ot ekspertnoj vstavki (03:50).</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">13:19</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Samostoyatel'nost':</strong> V DD vsyo gotovo — eda, stirka, uborka. A potom — raz, i ty dolzhen sam.<span class="q">"Eto problema. Real'no problema."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">13:48</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Social'nye kvartiry:</strong> Uchilsya zhit' odin, byudzhet, grafik. Potom — bez problem.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">16:11</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Obrazovanie:</strong> Postupil na platnoe vo Vladimirskij institut. Fond oplatil pervye 2 semestra.<span class="q">"Fond, po-moemu, eshchyo pomogal. Byuro Dobryh Del. Pervye dva semestra pomogali oplachivat'."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">17:16</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Rabota:</strong> Ustroilsya v magazin elektriki, potom sam oplachiival uchyobu.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">18:15</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Izvineniya:</strong><span class="q">"Esli by obschalsya s tyotej — izvinilsya by. Za te slova, za te postupki. Ved' oni nichego plohogo mne togda ne skazali. Mne mnogo vremeni ponadobilos', chtoby eto ponyat'."</span></div>
-    </div>
-
-  </div></div>
+  </div>
 </div>
 
 
 <!-- ================================================================== -->
 <!--                       YTCH04 STEPAN                                -->
 <!-- ================================================================== -->
-<div class="vid">
-  <div class="vid-head">
-    <h2>YTCH04 &mdash; Stepan</h2>
-    <span class="vid-meta">15:57 &middot; 20 let, stroitel'nyj kolledzh &middot; 1 spiker &middot; confidence 0.91</span>
+<div class="video-section">
+  <div class="video-header">
+    <h2>YTCH04 — Степан</h2>
+    <div class="video-meta">15:57 | 20 лет, строительный колледж, воспитанник Богоявленского ДД | 1 спикер | confidence 0.91</div>
   </div>
-  <div class="vid-body"><div class="tl">
+  <div class="video-body">
+    <div class="timeline">
 
-    <div class="tl-item"><span class="tl-tc">00:00</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Huk:</strong><span class="q">"Kogda ya prishyol k direktoru, on govorit: poedesh' v detskij dom. Ya sprosil — v kakoj? Ona govorit: v Bogoyavlenskij, tam izmenish'sya."</span></div>
+      <div class="timeline-item original">
+        <span class="timeline-tc">00:00</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Хук:</strong>
+          <span class="quote-line">"Когда я пришёл к директору, он говорит: поедешь в детский дом. Я спросил — в какой? Она говорит: в Богоявленский, там изменишься."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">00:32</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Представление:</strong>
+          <span class="quote-line">"Зовут Степан, воспитанник Богоявленского детского дома, 20 лет. Учусь в Перевозском строительном колледже."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">01:22</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>До ДД:</strong> Прогуливал школу, плохая компания, дома не появлялся. Опека забрала в 13 лет.
+          <span class="quote-line">"В один прекрасный момент начал прогуливать школу. Связался с плохой компанией, вообще дома не появлялся."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">02:54</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Первый шок:</strong> Новые дети, новые люди. Объяснили: мать восстановится — заберёт. Не сделала.
+          <span class="quote-line">"Мне объяснили: мать восстановится, приберёт квартиру, устроится на работу, заберёт. Ну, этого она не сделала."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item expert-insert">
+        <span class="timeline-tc">~03:35</span>
+        <div class="timeline-dot"></div>
+        <span class="insert-badge expert">Эксперт — Анна</span>
+        <div class="insert-title">"Не каждый детский дом меняет жизнь к лучшему"</div>
+        <div class="insert-text">
+          <div class="script">Анна: "Степану сказали: «Поедешь в Богоявленский — там изменишься.» И он действительно изменился. Но попади он в другое учреждение — история могла пойти совсем иначе. Мы знаем случаи, когда подростки из плохих компаний попадают в детские дома, где среда ещё хуже, чем на улице. Богоявленский — исключение. И наша задача — чтобы таких исключений становилось больше."</div>
+        </div>
+        <div class="insert-reason">Почему здесь: после прихода в ДД и первого шока — контекст "ему повезло". 22% видео.</div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">04:21</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Школа:</strong> Новенький, вызвали к доске, ничего не знает. Много упущенного.
+          <span class="quote-line">"Одноклассники смотрят на меня. Я новенький. Говорят — почему я? Говорю: у меня много упущенного материала."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">05:17</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Учёба с воспитателями:</strong> Садились и делали домашку. Помогали. Контрольные — списывал, но постепенно начал понимать.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">06:46</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Социальная квартира:</strong> Пожить одному. Бюджет: сколько купить, чтобы хватило.
+          <span class="quote-line">"Круто, если продержусь на одних пельменях. Но это тоже не вариант."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">07:32</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Готовка:</strong> Учился жарить картошку. Наталья Олеговна учила.
+          <span class="quote-line">"Масло больше добавляй! — Ага, понял. — Всё, хватит! Переворачиваешь каждые 5 минут."</span>
+        </div>
+      </div>
+
+      <div class="half-marker">--- СЕРЕДИНА ВИДЕО (7:58) ---</div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">09:03</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Зеленохозяйство:</strong> Огород, земля, полив. Интерес с возрастом прошёл, но опыт пригодится.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">09:48</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Сварка от фонда:</strong> Бюро Добрых Дел предложило и оплатило курс сварки. Получил свидетельство.
+          <span class="quote-line">"Сварщиком хочешь быть? Говорю — ладно, да, конечно, пригодится."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item cta-insert">
+        <span class="timeline-tc">~10:55</span>
+        <div class="timeline-dot"></div>
+        <span class="insert-badge cta">Сбор</span>
+        <div class="insert-title">"Профессия = шанс на нормальную жизнь"</div>
+        <div class="insert-text">
+          <div class="script">Титр + голос Анны: "Степан получил профессию сварщика благодаря фонду — и сразу устроился на работу. Для выпускника детского дома профессия — это не просто корочка, это билет в нормальную жизнь. Обучение сварке — 35 000 рублей. Маникюру — 15 000. Вождению — 40 000. Каждая оплаченная профессия — это выпускник, который не окажется на улице. burodd.ru"</div>
+        </div>
+        <div class="insert-reason">Почему здесь: сразу после рассказа про сварку от фонда — прямая связь. 68% видео — далеко от экспертной вставки (03:35).</div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">11:01</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Работа в ЖКХ:</strong> Сварщик, аварии, раскопки, зарплата, аванс каждые 15 дней.
+          <span class="quote-line">"Разные заявки бывают. Надо рассчитать аванс на проезд, на еду, на сигареты."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">13:31</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Колледж:</strong> Уволился из ЖКХ, поступил на строительство.
+          <span class="quote-line">"Выбрал строительный, потому что ближе всего."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">14:15</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Будущее:</strong> Призыв в армию 6 ноября. Если доучится — вернётся в ЖКХ или дальше. Семья — когда добьётся.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">15:22</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Совет:</strong>
+          <span class="quote-line">"Учиться. Не смотреть на проблемы в семье. Оградить себя от той компании, с которой я связался. Чего ты хочешь от жизни? Учиться — это никогда не лишнее."</span>
+        </div>
+      </div>
+
     </div>
-
-    <div class="tl-item"><span class="tl-tc">00:32</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Predstavlenie:</strong><span class="q">"Zovut Stepan, vospitannik Bogoyavlenskogo detskogo doma, 20 let. Uchus' v Perevozskom stroitel'nom kolledzhe."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">01:22</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Do DD:</strong> Progulival shkolu, plohaya kompaniya, doma ne poyavlyalsya. Opeka zabrala v 13 let.<span class="q">"V odin prekrasnyj moment nachal progulivat' shkolu. Svyazalsya s plohoj kompaniej, voobshche doma ne poyavlyalsya."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">02:54</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Pervyj shok:</strong> Novye deti, novye lyudi. Ob"yasnili: mat' vosstanovitsya — zaberyet. Ne sdelala.<span class="q">"Mne ob"yasnili: mat' vosstanovitsya, priberyet kvartiru, ustroitsya na rabotu, zaberyet. Nu, etogo ona ne sdelala."</span></div>
-    </div>
-
-    <div class="tl-item expert"><span class="tl-tc">~03:35</span><div class="tl-dot"></div>
-      <span class="badge expert">EKSPERT — ANNA</span>
-      <div class="ins-title">"Ne kazhdyj detskij dom menyaet zhizn' k luchshemu"</div>
-      <div class="script">Anna: "Stepanu skazali: 'Poedesh' v Bogoyavlenskij — tam izmenish'sya.' I on dejstvitel'no izmenilsya. No popadi on v drugoe uchrezhdenie — istoriya mogla pojti sovsem inache. My znaem sluchai, kogda podrostki iz plohih kompanij popadayut v detskie doma, gde sreda eshchyo huzhe, chem na ulice. Bogoyavlenskij — isklyuchenie. I nasha zadacha — chtoby takih isklyuchenij stanovilos' bol'she."</div>
-      <div class="ins-why">Pochemu zdes': posle prihoda v DD i pervogo shoka — kontekst "emu povezlo". 22% video.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">04:21</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Shkola:</strong> Noven'kij, vyzvali k doske, nichego ne znaet. Mnogo upuschennogo.<span class="q">"Odnoklassniki smotryat na menya. Ya noven'kij. Govoryat — pochemu ya? Govoryu: u menya mnogo upuschennogo materiala."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">05:17</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Uchyoba s vospitatelyami:</strong> Sadilis' i delali domashku. Pomogali. Kontrol'nye — spisyval, no postepenno nachal ponimat'.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">06:46</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Social'naya kvartira:</strong> Pozhit' odnomu. Byudzhet: skol'ko kupit', chtoby hvatilo.<span class="q">"Kruto, esli proderzhus' na odnih pel'menyah. No eto tozhe ne variant."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">07:32</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Gotovka:</strong> Uchilsya zharit' kartoshku. Natal'ya Olegovna uchila.<span class="q">"Maslo bol'she dobavlyaj! — Aga, ponyal. — Vsyo, hvatit! Perevorachivaesh' kazhdye 5 minut."</span></div>
-    </div>
-
-    <div class="half">--- SEREDINA VIDEO (7:58) ---</div>
-
-    <div class="tl-item"><span class="tl-tc">09:03</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Zelenohozyajstvo:</strong> Ogorod, zemlya, poliv. Interes s vozrastom proshyol, no opyt prigoditsya.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">09:48</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Svarka ot fonda:</strong> Byuro Dobryh Del predlozhilo i oplatilo kurs svarki. Poluchil svidetel'stvo.<span class="q">"Svarshhikom hochesh' byt'? Govoryu — ladno, da, konechno, prigoditsya."</span></div>
-    </div>
-
-    <div class="tl-item cta"><span class="tl-tc">~10:55</span><div class="tl-dot"></div>
-      <span class="badge cta">SBOR</span>
-      <div class="ins-title">"Professiya = shans na normal'nuyu zhizn'"</div>
-      <div class="script">Titr + golos Anny: "Stepan poluchil professiyu svarschika blagodarya fondu — i srazu ustroilsya na rabotu. Dlya vypusknika detskogo doma professiya — eto ne prosto korochka, eto bilet v normal'nuyu zhizn'. Obuchenie svarke — 35 000 rublej. Manikyuru — 15 000. Vozhdeniyu — 40 000. Kazhdaya oplachennaya professiya — eto vypusknik, kotoryj ne okazhetsya na ulice. burodd.ru"</div>
-      <div class="ins-why">Pochemu zdes': srazu posle rasskaza pro svarku ot fonda — pryamaya svyaz'. 68% video — daleko ot ekspertnoj vstavki (03:35).</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">11:01</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Rabota v ZHKH:</strong> Svarshhik, avarii, raskopki, zarplata, avans kazhdye 15 dnej.<span class="q">"Raznye zayavki byvayut. Nado rasschitat' avans na proezd, na edu."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">13:31</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Kolledzh:</strong> Uvolilsya iz ZHKH, postupil na stroitel'stvo.<span class="q">"Vybral stroitel'nyj, potomu chto blizhe vsego."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">14:15</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Budushchee:</strong> Prizyv v armiyu 6 noyabrya. Esli douchitsya — vernyotsya v ZHKH ili dal'she. Sem'ya — kogda dob'yotsya.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">15:22</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Sovet:</strong><span class="q">"Uchit'sya. Ne smotret' na problemy v sem'e. Ogradit' sebya ot toj kompanii, s kotoroj ya svyazalsya. Chego ty hochesh' ot zhizni? Uchit'sya — eto nikogda ne lishnee."</span></div>
-    </div>
-
-  </div></div>
+  </div>
 </div>
 
 
 <!-- ================================================================== -->
 <!--                       YTCH09 GULYA                                 -->
 <!-- ================================================================== -->
-<div class="vid">
-  <div class="vid-head">
-    <h2>YTCH09 &mdash; Gulya (vospitatel')</h2>
-    <span class="vid-meta">38:54 &middot; Panfilova Zh.T., vospitatel' + sotrudnik fonda &middot; 1 osn. spiker &middot; confidence 0.94</span>
+<div class="video-section">
+  <div class="video-header">
+    <h2>YTCH09 — Гуля (воспитатель)</h2>
+    <div class="video-meta">38:54 | Панфилова Жумагулсана, воспитатель Богоявленского ДД + сотрудник фонда | 1 осн. спикер | confidence 0.94</div>
   </div>
-  <div class="vid-body"><div class="tl">
+  <div class="video-body">
+    <div class="timeline">
 
-    <div class="tl-item"><span class="tl-tc">00:00</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Huk:</strong><span class="q">"Ty uzhe vzroslaya tetyonka, idi reshaj sama. Pochemu my govorim pro vypusknikov, chto im 18 — i nado perestat' ih opekat'? Pochemu tak proishodit?"</span></div>
+      <div class="timeline-item original">
+        <span class="timeline-tc">00:00</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Хук:</strong>
+          <span class="quote-line">"Ты уже взрослая тетенька, иди решай сама. Почему мы говорим про выпускников, что им 18 — и надо перестать их опекать? Почему так происходит?"</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">01:12</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Представление:</strong>
+          <span class="quote-line">"Меня зовут Панфилова Жумагулсана Тулоевна. Воспитатель в Богоявленском детском доме, сотрудник фонда Бюро Добрых Дел."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">03:24</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Психолог:</strong> Приезжает извне — уровень доверия высок. Рекомендации педагогам: не трогать ребёнка, дать время.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">04:10</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Адаптация новичков:</strong> Помочь не бояться доверять взрослым. Выделяют близких по темпераменту ребят.
+          <span class="quote-line">"У нас у взрослых одна задача — помочь адаптироваться, подумать, как выстраивать жизнь, не бояться доверять."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item expert-insert">
+        <span class="timeline-tc">~06:25</span>
+        <div class="timeline-dot"></div>
+        <span class="insert-badge expert">Эксперт — Анна</span>
+        <div class="insert-title">"Такой подход — 1% учреждений"</div>
+        <div class="insert-text">
+          <div class="script">Анна: "Всё, что рассказывает Гуля — система доверия, наставничество, индивидуальный подход — это то, как должно быть. Но так работают единицы. За все годы работы фонда мы нашли лишь два детских дома с таким подходом по всей России. В большинстве учреждений воспитатель — человек, который выгорел, получает минимальную зарплату и не имеет подготовки для работы с травмированными детьми."</div>
+        </div>
+        <div class="insert-reason">Почему здесь: после блока про систему доверия — контраст с реальностью. 16% видео.</div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">07:23</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Доверие:</strong> Дети не воспринимают как стукачество — посыл помочь друг другу.
+          <span class="quote-line">"Мы должны сделать так, чтобы они понимали, что нам можно и нужно доверять."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">08:10</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Возвраты из семей:</strong> Профессиональные семьи берут — не всегда складывается. Дети попадают в реабцентр, просятся обратно в ДД.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">09:58</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Взросление:</strong> Гулянки уходят на второй план. Задача — стать успешными.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">10:28</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Привязанность:</strong> Ребята привязываются, считают мамами, папами.
+          <span class="quote-line">"Наворачиваются слёзы, говоря об этом. Они начинают считать вас мамами, папами — а вы потом бросаете."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item cta-insert">
+        <span class="timeline-tc">~15:25</span>
+        <div class="timeline-dot"></div>
+        <span class="insert-badge cta">Сбор</span>
+        <div class="insert-title">"Помогите создать такую систему в других детских домах"</div>
+        <div class="insert-text">
+          <div class="script">Титр + голос Анны: "То, что вы видите — результат многолетней работы Гули и фонда. Мы хотим, чтобы это стало нормой, а не исключением. Прямо сейчас фонд работает с детскими домами, где детям не так повезло. Программа обучения педагогов — от 50 000 рублей на учреждение. Каждый рубль — это шаг от равнодушия к доверию. burodd.ru"</div>
+        </div>
+        <div class="insert-reason">Почему здесь: после эмоционального блока про привязанность — зритель максимально вовлечён. 40% видео — далеко от экспертной вставки (06:25).</div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">15:28</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>"Семья не по крови":</strong>
+          <span class="quote-line">"Семья не всегда по крови. Все ребята в моей группе — они прямо мои дети. Хоть многие из них по возрасту мне ровесники."</span>
+        </div>
+      </div>
+
+      <div class="half-marker">--- СЕРЕДИНА ВИДЕО (19:27) ---</div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">19:38</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Педагогика:</strong>
+          <span class="quote-line">"Педагогам нужно просто верить в детей. Говорить: у тебя всё получится."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">20:57</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Тыл:</strong> Дети стали неприспособленные к жизни. Важно чувствовать тыл — что за тобой кто-то стоит.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">22:49</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Работа = норма:</strong> Если выпускник не научился работать — жизнь пойдёт тяжело.
+          <span class="quote-line">"Одно самое основное — это работа. Зарплата в разы выше, чем у штатных юристов. Работа равно норма."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">25:06</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Гранты и проекты:</strong> Дети сами выходят на гранты и реализовывают проекты. Подвесные кресла, ковры.
+          <span class="quote-line">"Не каждый ребёнок в 14-15 лет может похвастаться, что умеет плести огромные подвесные кресла."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">27:14</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Трудоустройство 18+:</strong> Официальные рабочие места. Электросварщик. За каждым — наставник.
+          <span class="quote-line">"Сопровождаемое трудоустройство. За каждым закреплён наставник, который помогает влиться в работу."</span>
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">29:53</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Образование:</strong> Рабочие профессии, балл для поступления низкий.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">33:33</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>Жильё до 23 лет:</strong> По закону — до 23, если учится или работает.
+        </div>
+      </div>
+
+      <div class="timeline-item original">
+        <span class="timeline-tc">37:53</span>
+        <div class="timeline-dot"></div>
+        <div class="segment-text"><strong>История Валеры:</strong> Ковид, возвращение через министерство, армия, семья, фонд помогал.
+        </div>
+      </div>
+
     </div>
-
-    <div class="tl-item"><span class="tl-tc">01:12</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Predstavlenie:</strong><span class="q">"Menya zovut Panfilova Zhumagulsana Tuloevna. Vospitatel' v Bogoyavlenskom detskom dome, sotrudnik fonda Byuro Dobryh Del."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">03:24</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Psiholog:</strong> Priezhaet izvne — uroven' doveriya vysok. Rekomendacii pedagogam: ne trogat' rebyonka, dat' vremya.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">04:10</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Adaptaciya novichkov:</strong> Pomoch' ne boyat'sya doveryat' vzroslym. Vydelyayut blizkih po temperamentu rebyat.<span class="q">"U nas u vzroslyh odna zadacha — pomoch' adaptirovatsya, podumat', kak vystraivat' zhizn', ne boyat'sya doveryat'."</span></div>
-    </div>
-
-    <div class="tl-item expert"><span class="tl-tc">~06:25</span><div class="tl-dot"></div>
-      <span class="badge expert">EKSPERT — ANNA</span>
-      <div class="ins-title">"Takoj podhod — 1% uchrezhdenij"</div>
-      <div class="script">Anna: "Vsyo, chto rasskazyvaet Gulya — sistema doveriya, nastavnichestvo, individual'nyj podhod — eto to, kak dolzhno byt'. No tak rabotayut edinicy. Za vse gody raboty fonda my nashli lish' dva detskih doma s takim podhodom po vsej Rossii. V bol'shinstve uchrezhdenij vospitatel' — chelovek, kotoryj vygorel, poluchaet minimal'nuyu zarplatu i ne imeet podgotovki dlya raboty s travmirovannymi det'mi."</div>
-      <div class="ins-why">Pochemu zdes': posle bloka pro sistemu doveriya — kontrast s real'nost'yu. 16% video.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">07:23</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Doverie:</strong> Deti ne vosprinimayut kak stukachestvo — posyl pomoch' drug drugu.<span class="q">"My dolzhny sdelat' tak, chtoby oni ponimali, chto nam mozhno i nuzhno doveryat'."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">08:10</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Vozvraty iz semej:</strong> Professional'nye sem'i berut — ne vsegda skladyvaetsya. Deti popadayut v reabcentr, prosyatsya obratno v DD.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">09:58</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Vzroslenie:</strong> Gulyanki uhodyat na vtoroj plan. Zadacha — stat' uspeshnymi.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">10:28</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Privyazannost':</strong> Rebyata privyazyvayutsya, schitayut mamami, papami.<span class="q">"Navorachivayutsya slyozy, govorya ob etom. Oni nachinavut schitat' vas mamami, papami — a vy potom brosaete."</span></div>
-    </div>
-
-    <div class="tl-item cta"><span class="tl-tc">~15:25</span><div class="tl-dot"></div>
-      <span class="badge cta">SBOR</span>
-      <div class="ins-title">"Pomogite sozdat' takuyu sistemu v drugih detskih domah"</div>
-      <div class="script">Titr + golos Anny: "To, chto vy vidite — rezul'tat mnogoletnej raboty Guli i fonda. My hotim, chtoby eto stalo normoj, a ne isklyucheniem. Pryamo sejchas fond rabotaet s detskimi domami, gde detyam ne tak povezlo. Programma obucheniya pedagogov — ot 50 000 rublej na uchrezhdenie. Kazhdyj rubl' — eto shag ot ravnodushiya k doveriyu. burodd.ru"</div>
-      <div class="ins-why">Pochemu zdes': posle emocional'nogo bloka pro privyazannost' — zritel' maksimal'no vovlechyon. 40% video — daleko ot ekspertnoj vstavki (06:25).</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">15:28</span><div class="tl-dot"></div>
-      <div class="seg"><strong>"Sem'ya ne po krovi":</strong><span class="q">"Sem'ya ne vsegda po krovi. Vse rebyata v moej gruppe — oni pryam moi deti. Hot' mnogie iz nih po vozrastu mne rovesniki."</span></div>
-    </div>
-
-    <div class="half">--- SEREDINA VIDEO (19:27) ---</div>
-
-    <div class="tl-item"><span class="tl-tc">19:38</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Pedagogika:</strong><span class="q">"Pedagogam nuzhno prosto verit' v detej. Govorit': u tebya vsyo poluchitsya."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">20:57</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Tyl:</strong> Deti stali neprisposoblennye k zhizni. Vazhno chuvstvovat' tyl — chto za toboj kto-to stoit.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">22:49</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Rabota = norma:</strong> Esli vypusknik ne nauchilsya rabotat' — zhizn' pojdyot tyazhelo.<span class="q">"Odno samoe osnovnoe — eto rabota. Zarplata v razy vyshe, chem u shtatnyh yuristov. Rabota ravno norma."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">25:06</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Granty i proekty:</strong> Deti sami vyhodyat na granty i realizovyvayut proekty. Podvesnye kresla, kovry.<span class="q">"Ne kazhdyj rebyonok v 14-15 let mozhet pohvastat'sya, chto umeet plesti ogromnye podvesnye kresla."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">27:14</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Trudoustrojstvo 18+:</strong> Oficial'nye rabochie mesta. Elektrosvarshhik. Za kazhdym — nastavnik.<span class="q">"Soprovozhdaemoe trudoustrojstvo. Za kazhdym zakreplyaon nastavnik, kotoryj pomogaet vlit'sya v rabotu."</span></div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">33:33</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Zhil'yo do 23 let:</strong> Po zakonu — do 23, esli uchitsya ili rabotaet.</div>
-    </div>
-
-    <div class="tl-item"><span class="tl-tc">37:53</span><div class="tl-dot"></div>
-      <div class="seg"><strong>Istoriya Valery:</strong> Kovid, vozvraschenie cherez ministerstvo, armiya, sem'ya, fond pomogal.</div>
-    </div>
-
-  </div></div>
+  </div>
 </div>
 
 
 <!-- ===== SUMMARY ===== -->
-<div class="vid">
-  <div class="vid-head">
-    <h2>Svodnaya tablica</h2>
+<div class="video-section">
+  <div class="video-header">
+    <h2>Сводная таблица</h2>
   </div>
-  <div class="vid-body">
-    <table class="stbl">
+  <div class="video-body">
+    <table class="summary-table">
       <thead>
-        <tr><th>Video</th><th>Tip</th><th>TC</th><th>%</th><th>Tema</th></tr>
+        <tr>
+          <th>Видео</th>
+          <th>Тип</th>
+          <th>Таймкод</th>
+          <th>% видео</th>
+          <th>Тема вставки</th>
+        </tr>
       </thead>
       <tbody>
         <tr>
-          <td rowspan="2"><strong>YTCH02</strong><br>Vlad (34:13)</td>
-          <td><span class="badge expert" style="margin:0">Ekspert</span></td>
-          <td>~05:20</td><td>15%</td>
-          <td>Sistemu ne pochinili: 3 raza zabirali i vozvraschali</td>
+          <td rowspan="2"><strong>YTCH02</strong><br>Влад (34:13)</td>
+          <td><span class="insert-badge expert" style="margin:0">Эксперт</span></td>
+          <td>~05:20</td>
+          <td>15%</td>
+          <td>Систему не починили: 3 раза забирали и возвращали</td>
         </tr>
         <tr>
-          <td><span class="badge cta" style="margin:0">Sbor</span></td>
-          <td>~19:25</td><td>57%</td>
-          <td>Oplatite kurs podgotovki k EGE (ot 15 000 rub)</td>
+          <td><span class="insert-badge cta" style="margin:0">Сбор</span></td>
+          <td>~19:25</td>
+          <td>57%</td>
+          <td>Оплатите курс подготовки к ЕГЭ (от 15 000 руб)</td>
         </tr>
-        <tr class="sep">
-          <td rowspan="2"><strong>YTCH03</strong><br>Daniil (19:16)</td>
-          <td><span class="badge expert" style="margin:0">Ekspert</span></td>
-          <td>~03:50</td><td>20%</td>
-          <td>Alkogolizm — prichina №1, rabota s sem'yoj</td>
-        </tr>
-        <tr>
-          <td><span class="badge cta" style="margin:0">Sbor</span></td>
-          <td>~12:00</td><td>62%</td>
-          <td>Professii dlya rebyat iz drugih domov (ot 15 000 rub)</td>
-        </tr>
-        <tr class="sep">
-          <td rowspan="2"><strong>YTCH04</strong><br>Stepan (15:57)</td>
-          <td><span class="badge expert" style="margin:0">Ekspert</span></td>
-          <td>~03:35</td><td>22%</td>
-          <td>Ne kazhdyj DD menyaet zhizn' k luchshemu</td>
+        <tr style="border-top: 2px solid var(--border)">
+          <td rowspan="2"><strong>YTCH03</strong><br>Даниил (19:16)</td>
+          <td><span class="insert-badge expert" style="margin:0">Эксперт</span></td>
+          <td>~03:50</td>
+          <td>20%</td>
+          <td>Алкоголизм — причина №1, работа с семьёй</td>
         </tr>
         <tr>
-          <td><span class="badge cta" style="margin:0">Sbor</span></td>
-          <td>~10:55</td><td>68%</td>
-          <td>Professiya = bilet v zhizn' (svarka 35k, manikyur 15k)</td>
+          <td><span class="insert-badge cta" style="margin:0">Сбор</span></td>
+          <td>~12:00</td>
+          <td>62%</td>
+          <td>Профессии для ребят из других домов (от 15 000 руб)</td>
         </tr>
-        <tr class="sep">
-          <td rowspan="2"><strong>YTCH09</strong><br>Gulya (38:54)</td>
-          <td><span class="badge expert" style="margin:0">Ekspert</span></td>
-          <td>~06:25</td><td>16%</td>
-          <td>Takoj podhod — 1% uchrezhdenij</td>
+        <tr style="border-top: 2px solid var(--border)">
+          <td rowspan="2"><strong>YTCH04</strong><br>Степан (15:57)</td>
+          <td><span class="insert-badge expert" style="margin:0">Эксперт</span></td>
+          <td>~03:35</td>
+          <td>22%</td>
+          <td>Не каждый ДД меняет жизнь к лучшему</td>
         </tr>
         <tr>
-          <td><span class="badge cta" style="margin:0">Sbor</span></td>
-          <td>~15:25</td><td>40%</td>
-          <td>Obuchenie pedagogov (ot 50 000 rub na uchrezhdenie)</td>
+          <td><span class="insert-badge cta" style="margin:0">Сбор</span></td>
+          <td>~10:55</td>
+          <td>68%</td>
+          <td>Профессия = билет в жизнь (сварка 35к, маникюр 15к)</td>
+        </tr>
+        <tr style="border-top: 2px solid var(--border)">
+          <td rowspan="2"><strong>YTCH09</strong><br>Гуля (38:54)</td>
+          <td><span class="insert-badge expert" style="margin:0">Эксперт</span></td>
+          <td>~06:25</td>
+          <td>16%</td>
+          <td>Такой подход — 1% учреждений</td>
+        </tr>
+        <tr>
+          <td><span class="insert-badge cta" style="margin:0">Сбор</span></td>
+          <td>~15:25</td>
+          <td>40%</td>
+          <td>Обучение педагогов (от 50 000 руб на учреждение)</td>
         </tr>
       </tbody>
     </table>
-    <p class="note"><strong>Princip razmescheniya:</strong> Ekspert — v pervoj chetverti (15-22%). Prizyv k sboru — vo vtoroj polovine, no ne ryadom s ekspertnoj vstavkoj (minimum 7-14 minut mezhdu nimi). Kazhdyj CTA — s konkretnoj summoj i privyazkoj k istorii geroya.</p>
+
+    <p style="color: var(--muted); font-size: 0.85rem; margin-top: 1.5rem;">
+      <strong>Принцип размещения:</strong> Эксперт — в первой четверти (15-22%). Призыв к сбору — во второй половине, но не рядом с экспертной вставкой (минимум 7-14 минут между ними). Каждый CTA — с конкретной суммой и привязкой к истории героя.
+    </p>
   </div>
 </div>
 
-</div><!-- .wrap -->
 
-<!-- FOOTER -->
 <div class="footer">
+  YTCH Insert Plan v2 &middot; burodd.ru &middot; 10.04.2026<br><br>
   powered by <a href="https://rya.ae/">RYA.AE</a>
   <div style="margin-top:12px;font-size:12px;">
-    <span style="color:var(--white);font-weight:600;">Roman Sergeev</span> &middot; Producer<br>
-    <a href="https://t.me/sergeevr" style="color:var(--blue);font-size:12px;">Telegram</a> &middot;
-    <a href="https://wa.me/971569399953" style="color:var(--blue);font-size:12px;">WhatsApp</a> &middot;
-    <a href="mailto:rs@rya.ae?subject=YTCH%20S2%20Feedback" style="color:var(--blue);font-size:12px;">rs@rya.ae</a>
+    <span style="color:var(--text);font-weight:600;">Roman Sergeev</span> &middot; Producer<br>
+    <a href="https://t.me/sergeevr">Telegram</a> &middot;
+    <a href="https://wa.me/971569399953">WhatsApp</a> &middot;
+    <a href="mailto:rs@rya.ae?subject=YTCH%20S2%20Feedback">rs@rya.ae</a>
   </div>
 </div>
 
